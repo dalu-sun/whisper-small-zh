@@ -2,7 +2,7 @@ from transformers import WhisperFeatureExtractor, WhisperTokenizer, WhisperForCo
 import opencc
 from pypinyin import lazy_pinyin, Style
 
-model_path = "C:/Users/brian/OneDrive/Desktop/GitHub_Repos/whisper-small-zh/model"
+model_path = "./model"
 
 # Load the model
 model = WhisperForConditionalGeneration.from_pretrained(model_path)
