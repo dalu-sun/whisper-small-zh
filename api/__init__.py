@@ -1,6 +1,12 @@
 from flask import Flask
 from .routes import bp
-from .utils import model, feature_extractor, tokenizer  # This line imports from utils.py
+from .utils import Utils
+
+utils_instance = Utils.get_instance()
+
+model = utils_instance.model
+feature_extractor = utils_instance.feature_extractor
+tokenizer = utils_instance.tokenizer
 
 def create_app():
     app = Flask(__name__)
