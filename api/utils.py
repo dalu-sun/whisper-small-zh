@@ -1,6 +1,42 @@
 from transformers import WhisperFeatureExtractor, WhisperTokenizer, WhisperForConditionalGeneration
 import opencc
 from pypinyin import lazy_pinyin, Style
+import requests
+import os
+
+def download_model():
+    model_url = "https://drive.google.com/uc?export=download&id=1Inmqv4IkjU6wCIB0Vvjzs0M88epXPEtY"
+    model_save_path = "./model/pytorch_model.bin"
+
+    if not os.path.exists("./model"):
+        os.makedirs("./model")
+
+    try:
+        # Initial request to get the confirm token
+        session = requests.Session()
+        response = session.get(model_url, stream=True)
+        token = None
+        for key, value in response.cookies.items():
+            if key.startswith('download_warning'):
+                token = value
+                break
+
+        if token:
+            model_url += "&confirm=" + token
+
+        # Downloading the file
+        response = session.get(model_url, stream=True)
+        with open(model_save_path, "wb") as file:
+            for chunk in response.iter_content(chunk_size=8192):
+                file.write(chunk)
+
+        print("Model downloaded successfully.")
+
+    except requests.RequestException as e:
+        print(f"Error downloading the model: {e}")
+    except Exception as e:
+        print(f"Error occurred: {e}")
+
 
 model_path = "./model"
 _instance = None
@@ -8,10 +44,15 @@ _instance = None
 class Utils:
 
     def __init__(self):
-        self.model = WhisperForConditionalGeneration.from_pretrained(model_path)
-        self.feature_extractor = WhisperFeatureExtractor.from_pretrained("openai/whisper-small")
-        self.tokenizer = WhisperTokenizer.from_pretrained("openai/whisper-small", language="chinese", task="transcribe")
-        self.converter = opencc.OpenCC('t2s')  # Convert from Traditional to Simplified
+        download_model()
+        try:
+            self.model = WhisperForConditionalGeneration.from_pretrained(model_path)
+            self.feature_extractor = WhisperFeatureExtractor.from_pretrained("openai/whisper-small")
+            self.tokenizer = WhisperTokenizer.from_pretrained("openai/whisper-small", language="chinese", task="transcribe")
+            self.converter = opencc.OpenCC('t2s')
+        except Exception as e:
+            print(f"Error initializing the utilities: {e}")
+            raise e
 
     @staticmethod
     def get_instance():

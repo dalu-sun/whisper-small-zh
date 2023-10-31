@@ -181,6 +181,9 @@ flask==3.0.0 ; python_version >= "3.8" and python_version < "4.0" \
 fsspec==2023.10.0 ; python_version >= "3.8" and python_version < "4.0" \
     --hash=sha256:330c66757591df346ad3091a53bd907e15348c2ba17d63fd54f5c39c4457d2a5 \
     --hash=sha256:346a8f024efeb749d2a5fca7ba8854474b1ff9af7c3faaf636a4548781136529
+gunicorn==21.2.0 ; python_version >= "3.8" and python_version < "4.0" \
+    --hash=sha256:3213aa5e8c24949e792bcacfc176fef362e7aac80b76c56f6b5122bf350722f0 \
+    --hash=sha256:88ec8bff1d634f98e61b9f65bc4bf3cd918a90806c6f5c48bc5603849ec81033
 huggingface-hub==0.18.0 ; python_version >= "3.8" and python_version < "4.0" \
     --hash=sha256:10eda12b9c1cfa800b4b7c096b3ace8843734c3f28d69d1c243743fb7d7a2e81 \
     --hash=sha256:ee0b6b68acbf6aeb6d083ea081e981c277a1104b82ab67fdf6780ff5396830af
