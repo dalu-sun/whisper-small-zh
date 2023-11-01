@@ -2,12 +2,11 @@
 FROM python:3.8-slim
 
 # Install necessary system dependencies
-RUN apt-get update -qq
-RUN apt-get install -y --no-install-recommends curl build-essential
-RUN pip install poetry
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
-
+RUN apt-get update -qq && \
+    apt-get install -y --no-install-recommends curl build-essential && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    pip install poetry
 
 # Set environment variables for Poetry
 ENV POETRY_HOME="/opt/poetry"
@@ -20,9 +19,8 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock ./
 
 # Install the project's dependencies using Poetry
-# Here, we're disabling virtual environments and not installing dev dependencies
-RUN poetry config virtualenvs.create false \
-    && poetry install --no-dev
+RUN poetry config virtualenvs.create false && \
+    poetry install --no-dev
 
 # Copy the rest of the application's files into the container
 COPY . .

@@ -1,0 +1,20 @@
+# Git related
+.git*
+.gitattributes
+
+# Compiled Python files
+**/__pycache__/
+*.pyc
+*.pyo
+
+# Miscellaneous
+*.log
+*.swp
+*.bak
+
+# Not usually required in the container
+requirements.txt
+runtime.txt
+branch_contents.bat
+git_util
+procfile
